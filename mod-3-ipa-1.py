@@ -36,12 +36,11 @@ def shift_letter(letter, shift):
         return " "
     else:
         for x in letter:
-            if x.isalpha():
+            if x.isalpha() and x.isupper():
                 stayInAlphabet = ord(x) + shift 
                 if stayInAlphabet > ord('Z'):
                     stayInAlphabet -= 26
-            finalLetter = chr(stayInAlphabet)
-            cipher_text += finalLetter
+            cipher_text += chr(stayInAlphabet)
         return cipher_text
     
 def caesar_cipher(message, shift):
@@ -62,16 +61,21 @@ def caesar_cipher(message, shift):
     '''
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    cipher_text = ""
-    for x in message:
-        if x.isalpha():
-            stayInAlphabet = ord(x) + shift 
-            if stayInAlphabet > ord('Z'):
-                stayInAlphabet -= 26
-        finalLetter = chr(stayInAlphabet)
-        cipher_text += finalLetter
-    return cipher_text       
-
+    alphabet = ('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z')
+    cipher_text = []
+    
+    original_text = list(message)
+    
+    for i in range(len(original_text)):
+        if original_text[i] not in alphabet:
+            cipher_text.append("")
+            
+        elif len(alphabet) - 1 < alphabet.index(original_text[i]) + shift:
+            cipher_text.append(alphabet[alphabet.index(original_text[i])%len(alphabet)])
+        else:
+            cipher_text.append(alphabet[alphabet.index(original_text[i]) + shift])
+    return ''.join(cipher_text)
+      
 def shift_by_letter(letter, letter_shift):
     '''Shift By Letter. 
     10 points.
@@ -108,7 +112,7 @@ def shift_by_letter(letter, letter_shift):
                     stayInAlphabet -= 26
             finalLetter = chr(stayInAlphabet)
             cipher_text += finalLetter
-        return cipher_text   
+        return cipher_text 
 
 def vigenere_cipher(message, key):
     '''Vigenere Cipher. 
@@ -142,7 +146,16 @@ def vigenere_cipher(message, key):
     if len(key) < len(message):
         for i in range(len(message) - len(key)):
             key.append(key[i % len(key)])
-        return("" . join(key))
+            new_key = "" . join(key)
+            
+        for i in range(len(message)):
+            x = ord(' ')
+            if message[i] != ' ': 
+                x = (ord(message[i]) + ord(new_key[i])) % 26
+                x += ord('A')
+            cipher_text.append(chr(x))
+        return("" . join(cipher_text))
+    
     else:
         for i in range(len(message)):
             x = ord(' ')
@@ -201,14 +214,16 @@ def scytale_cipher(message, shift):
     '''
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    message_length = len(message)
-    encoded_text = [None] * message_length
-    message += "_" * (shift - (message_length % shift))
     
-    for i in range(message_length):
-        encoded_index = (i // shift) + (message_length // shift) * (i % shift)
-        encoded_text[i] = message[encoded_index]
-    return("".join(encoded_text))
+    original_text = list(message)
+    while len(original_text) % shift > 0:
+        original_text.append('_')
+        
+    cipher_text = []    
+    for x in range(len(original_text)):
+         cipher_text.append(original_text[(x // shift) + (len(original_text) // shift) * (x % shift)])
+   
+    return ''.join(cipher_text)
 
 def scytale_decipher(message, shift):
     '''Scytale De-cipher.
