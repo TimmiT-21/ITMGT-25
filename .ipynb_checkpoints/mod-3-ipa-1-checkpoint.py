@@ -31,18 +31,18 @@ def shift_letter(letter, shift):
     '''
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    cipher_text = ""
-    if letter == " ":
+    alphabet = ('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z')
+  
+    if not letter.isalpha():
         return " "
-    else:
-        for x in letter:
-            if x.isalpha() and x.isupper():
-                stayInAlphabet = ord(x) + shift 
-                if stayInAlphabet > ord('Z'):
-                    stayInAlphabet -= 26
-            cipher_text += chr(stayInAlphabet)
-        return cipher_text
     
+    elif alphabet.index(letter) + shift > 26 - 1:
+        return alphabet[alphabet.index(letter) + shift - 26]
+    
+    else:
+        return alphabet[alphabet.index(letter) + shift]
+
+
 def caesar_cipher(message, shift):
     '''Caesar Cipher. 
     10 points.
@@ -61,20 +61,23 @@ def caesar_cipher(message, shift):
     '''
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    alphabet = ('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z')
-    cipher_text = []
     
+    cipher_text = []
     original_text = list(message)
+    alphabet_2 = ('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z')
     
     for i in range(len(original_text)):
-        if original_text[i] not in alphabet:
-            cipher_text.append("")
+        
+        if original_text[i] not in alphabet_2:
+            cipher_text.append(" ")
             
-        elif len(alphabet) - 1 < alphabet.index(original_text[i]) + shift:
-            cipher_text.append(alphabet[alphabet.index(original_text[i])%len(alphabet)])
+        elif alphabet_2.index(original_text[i]) + shift > 26 - 1:
+            cipher_text.append(alphabet_2[alphabet_2.index(original_text[i]) + shift - 26 ])
+            
         else:
-            cipher_text.append(alphabet[alphabet.index(original_text[i]) + shift])
+            cipher_text.append(alphabet_2[alphabet_2.index(original_text[i]) + shift])
     return ''.join(cipher_text)
+    
       
 def shift_by_letter(letter, letter_shift):
     '''Shift By Letter. 
