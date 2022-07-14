@@ -94,7 +94,7 @@ def tic_tac_toe(board):
         return "O"
     
     else:
-        return "NO WINNER."
+        return "NO WINNER"
     
     ___
 #[board[i][board_proportions-i-1] for i in range(board_length)]
