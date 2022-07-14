@@ -3,6 +3,11 @@ Thinking Like a Programmer
 This assignment covers your intermediate proficiency with Python.
 '''
 
+'''Module 3: Individual Programming Assignment 1
+Thinking Like a Programmer
+This assignment covers your intermediate proficiency with Python.
+'''
+
 def shift_letter(letter, shift):
     '''Shift Letter. 
     5 points.
@@ -31,17 +36,15 @@ def shift_letter(letter, shift):
     '''
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    alphabet = ('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z')
-  
-    if not letter.isalpha():
+    if letter == " ":
         return " "
-    
-    elif alphabet.index(letter) + shift > 26 - 1:
-        return alphabet[alphabet.index(letter) + shift - 26]
-    
-    else:
-        return alphabet[alphabet.index(letter) + shift]
-
+    else: 
+        cipher_letter = ""
+        for x in letter:
+            position = ord(letter) - 65  
+            new_letter=(chr(65 + (position + shift) % 26))    
+            cipher_letter += new_letter  
+        return cipher_letter
 
 def caesar_cipher(message, shift):
     '''Caesar Cipher. 
@@ -61,22 +64,16 @@ def caesar_cipher(message, shift):
     '''
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    
-    cipher_text = []
-    original_text = list(message)
-    alphabet_2 = ('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z')
-    
-    for i in range(len(original_text)):
+    cipher_message = ""
+    for i in range(len(message)):
+        char = message[i]
+        position = ord(char) - 65  
+        new_letter = (chr(65 + (position + shift) % 26))    
+        if new_letter == (chr(65 + (ord(" ") - 65  + shift) % 26)) and char == " ":
+            new_letter = " "
+        cipher_message += new_letter 
         
-        if original_text[i] not in alphabet_2:
-            cipher_text.append(" ")
-            
-        elif alphabet_2.index(original_text[i]) + shift > 26 - 1:
-            cipher_text.append(alphabet_2[alphabet_2.index(original_text[i]) + shift - 26 ])
-            
-        else:
-            cipher_text.append(alphabet_2[alphabet_2.index(original_text[i]) + shift])
-    return ''.join(cipher_text)
+    return cipher_message
     
       
 def shift_by_letter(letter, letter_shift):
