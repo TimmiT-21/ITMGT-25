@@ -139,47 +139,19 @@ def eta(first_stop, second_stop, route_map):
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
     
-    initial_travel = 0
-    summoned_keys = list(route_map.keys())
-    summoned_keys_integer = len(summoned_keys)
-    i = 0
-    for i in range(summoned_keys_integer):
-        if first_stop == summoned_keys[i][0]:
-            initial_travel += route_map[summoned_keys[i]]["travel_time_mins"]
-        break
+    travel_time = 0
+    current_stop = first_stop
     
-    add_legs_travel = 0
-    if summoned_keys_integer > i + 1:
-        while summoned_keys_integer > i + 1:
-            add_legs_travel += route_map[summoned_keys[i + 1]]["travel_time_mins"]
-            if second_stop != summoned_keys[i + 1][1]:
-                i += 2
-            else:
-                break
-                
-    elif summoned_keys_integer == i + 1:
-        while summoned_keys_integer > i + 1:
-            add_legs_travel += route_map[summoned_keys[i + 1]]["travel_time_mins"]
-            if second_stop != summoned_keys[i + 1][1]:
-                i += 1
-            else:
-                break
+    if first_stop == second_stop:
+        legs_times = [t['travel_time_mins'] for t in route_map.values()]
+        return sum(legs_times)
+        
     else:
-        return add_legs_travel
-          
-    final_travel = initial_travel + add_legs_travel
-    return final_travel
-
-legs = {
-     ("upd","admu"):{
-         "travel_time_mins":10
-     },
-     ("admu","dlsu"):{
-         "travel_time_mins":35
-     },
-     ("dlsu","upd"):{
-         "travel_time_mins":55
-     }
-}
-
-print(list(legs.keys()))
+        while current_stop != second_stop:
+            for leg, travel_time_mins in legs.items():
+                if leg[0] == current_stop:
+                    travel_time += travel_time_mins['travel_time_mins']
+                    current_stop = leg[1]    
+                if current_stop == second_stop:
+                    break
+        return(travel_time)
